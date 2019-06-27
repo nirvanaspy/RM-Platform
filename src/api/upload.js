@@ -6,13 +6,6 @@ export function postMerge(data) {
     data
   })
 }
-// export function commitdescrition(data) {
-//   return request({
-//     url: 'files/chunks/information',
-//     method: 'post',
-//     data
-//   })
-// }
 /**
  * 文件合并完成后后端存文件
  * @param  data
@@ -20,14 +13,17 @@ export function postMerge(data) {
  */
 export function realupload(id, data, parenid) {
   return request({
-    url: 'resource-files/' + id + '/upload/files/' + parenid,
+    url: 'resource-files/' + id + '/upload/files',
     method: 'post',
     headers: {
       'content-type': 'application/json;charset=utf-8'
     },
-    data
+    // data: qs.stringify(data),
+    data,
+    params: parenid
   })
 }
+/* ****模型资源上传******/
 /**
  * 选择资源开始上传时获取本次上传id
  * @param  data
@@ -35,6 +31,42 @@ export function realupload(id, data, parenid) {
 export function getresourceId(data) {
   return request({
     url: 'modelResource',
+    method: 'post',
+    data
+  })
+}
+/* ****标准资源上传******/
+/**
+ * 选择资源开始上传时获取本次上传id
+ * @param  data
+ */
+export function getstandardresourceId(data) {
+  return request({
+    url: 'standards',
+    method: 'post',
+    data
+  })
+}
+/* ****公共算法服务上传******/
+/**
+ * 选择资源开始上传时获取本次上传id
+ * @param  data
+ */
+export function algorithmAndServerId(data) {
+  return request({
+    url: 'algorithmAndServer',
+    method: 'post',
+    data
+  })
+}
+/* ****工具软件上传******/
+/**
+ * 选择资源开始上传时获取本次上传id
+ * @param  data
+ */
+export function toolsAndSoftwareId(data) {
+  return request({
+    url: 'toolsAndSoftware',
     method: 'post',
     data
   })

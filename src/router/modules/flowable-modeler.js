@@ -6,6 +6,7 @@ const modelerRouter = {
   component: Layout,
   name: 'flowable-modeler',
   redirect: '/flowable-modeler/processes',
+  meta: { title: '流程管理', icon: 'example' },
   children: [
     {
       path: 'processes',
@@ -29,7 +30,7 @@ const modelerRouter = {
       path: 'decision-tables',
       component: () => import('@/views/flowable/index'),
       name: 'decision-tables',
-      meta: { title: 'decision-tables', icon: 'guide', root: 'modeler', page: 'decision-tables' }
+      meta: { title: 'decision-tables', icon: 'table', root: 'modeler', page: 'decision-tables' }
     },
     {
       path: 'apps',

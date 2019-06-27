@@ -1,10 +1,6 @@
 <template>
   <div class="app-container">
-    <iframe
-      :src="src"
-      frameborder="0"
-      width="100%"
-      height="100%"></iframe>
+    <iframe :src="src" frameborder="0" width="100%" height="100%"/>
   </div>
 </template>
 
@@ -28,9 +24,9 @@ export default {
       const meta = this.$route.meta
       if (meta && meta.root) {
         this.src = '/static/flowable-' + meta.root + '/index.html'
-        // if (meta.page) {
-        //   this.src += '#/' + meta.page
-        // }
+        if (meta.page) {
+          this.src += '#/' + meta.page
+        }
       }
     }
   }

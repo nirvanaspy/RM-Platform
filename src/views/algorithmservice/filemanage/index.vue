@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import fileupload from '@/components/fileupload'
-import list from '@/components/list'
+import fileupload from '../uploadFile'
+import list from '../base'
 export default {
   components: { fileupload, list },
   data() {

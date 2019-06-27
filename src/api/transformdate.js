@@ -1,27 +1,52 @@
-export default function format(data, fmt) {
-  const date = date
-  var o = {
-    'M+': date.getMonth() + 1, // 月份
-    'd+': date.getDate(), // 日
-    'h+': date.getHours(), // 小时
-    'm+': date.getMinutes(), // 分
-    's+': date.getSeconds(), // 秒
-    'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
-    S: date.getMilliseconds() // 毫秒
-  }
-  if (/(y+)/.test(fmt)) {
-    fmt = fmt.replace(
-      RegExp.$1,
-      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    )
-  }
-  for (var k in o) {
-    if (new RegExp('(' + k + ')').test(fmt)) {
-      fmt = fmt.replace(
-        RegExp.$1,
-        RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
-      )
-    }
-  }
-  return fmt
+import moment from 'moment-timezone'
+var timezone = 'Asia/Shanghai'
+
+export default function format(data) {
+  const newdate = moment(data)
+    .tz(timezone)
+    .format('YYYY-MM-DD hh:mm:ss')
+  return newdate
 }
+// export default function format(data) {
+//   const arr = data.split('T')
+//   let date = arr[0]
+//   const timearr = arr[1].split(':')
+//   var hour, min, seconds
+//   hour = +timearr[0] + 8
+//   if (hour >= 24) {
+//     var tranform = date.split('-')
+//     tranform.pop()
+//     var day = +date.split('-')[2] + 1
+//     date = tranform.join('-') + '-' + (day > 9 ? day : '0' + day)
+//     hour = hour - 24 + ''
+//   } else {
+//     hour += ''
+//   }
+//   min = timearr[1]
+//   seconds = timearr[2].split('.')[0]
+//   return date + ' ' + hour + ':' + min + ':' + seconds
+// }
+
+// export default function format(data) {
+//   const arr = data.split('T')
+//   let date = arr[0]
+//   const timearr = arr[1].split(':')
+//   var hour, min, seconds
+//   hour = +timearr[0] + 8
+//   if (hour === 24) {
+//     date =
+//       date
+//         .split('-')
+//         .pop()
+//         .join('-') +
+//       '-' +
+//       +date.split('-')[2] +
+//       1
+//     hour = 0 + ''
+//   } else {
+//     hour += ''
+//   }
+//   min = timearr[1]
+//   seconds = timearr[2].split('.')[0]
+//   return date + ' ' + hour + ':' + min + ':' + seconds
+// }

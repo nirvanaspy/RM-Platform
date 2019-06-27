@@ -6,6 +6,7 @@ const idmRouter = {
   component: Layout,
   name: 'flowable-idm',
   redirect: '/flowable-idm/user-mgmt',
+  meta: { title: '流程用户管理', icon: 'example' },
   children: [
     {
       path: 'user-mgmt',

@@ -6,6 +6,7 @@ const taskRouter = {
   component: Layout,
   name: 'flowable-task',
   redirect: '/flowable-task/index',
+  meta: { title: '任务管理', icon: 'example' },
   children: [
     {
       path: 'myToDo',

@@ -89,102 +89,58 @@ export const constantRoutes = [
   {
     path: '/specification',
     component: Layout,
-    redirect: '/specification/table',
-    name: 'Specification',
-    meta: { title: '标准规范管理', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        name: 'Specification',
+        path: 'index',
+        component: () => import('@/views/standard/filemanage/index'),
+        meta: { title: '标准规范管理', icon: 'example' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/algorithmservice',
     component: Layout,
-    redirect: '/form/filemanage',
-    name: 'Form',
+    redirect: '/algorithmservice/filemanage',
+    name: 'Algorithmservice',
     meta: { title: '  公共算法/服务管理', icon: 'dashboard' },
     children: [
       {
         path: 'filemanage',
-        component: () => import('@/views/form/filemanage/index'),
-        name: 'form_modelmanage',
+        component: () => import('@/views/algorithmservice/filemanage/index'),
+        name: 'Algorith_modelmanage',
         meta: { title: '文件管理', icon: '文件' }
       },
       {
         path: 'library',
-        component: () => import('@/views/form/library/index'),
-        name: 'form_library',
+        component: () => import('@/views/algorithmservice/library/index'),
+        name: 'Algorith_library',
         meta: { title: '出入库', icon: '上传' }
       }
     ]
   },
   {
-    path: '/nested',
+    path: '/toolssoftware',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/toolssoftware/menu1',
+    name: 'toolssoftware',
     meta: {
       title: '工具软件管理',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'filemanage',
+        component: () => import('@/views/toolssoftware/filemanage/index'), // Parent router-view
+        name: 'tools_filemanage',
+        meta: { title: '文件管理', icon: '文件' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'library',
+        component: () => import('@/views/algorithmservice/library/index'),
+        name: 'tools_library',
+        meta: { title: '出入库', icon: '上传' }
       }
     ]
   },

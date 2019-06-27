@@ -171,8 +171,8 @@ import { parseTime } from '@/utils'
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 // import { datalist } from '@/api/mockdata'
-import { filesearch, modelconditon } from '@/api/fileSearch'
-import { models } from '@/api/download'
+import { toolsAndSoftwarelist, toolsAndSoftwareconditon } from '@/api/fileSearch'
+import { toolsAndSoftware } from '@/api/download'
 import { searchmodelfile } from '@/api/searccondition'
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -249,7 +249,7 @@ export default {
       // this.total = data.data.total
       var obj = JSON.parse(JSON.stringify(this.listQuery))
       obj.page = obj.page - 1
-      filesearch(obj).then((res) => {
+      toolsAndSoftwarelist(obj).then((res) => {
         this.total = res.data.data.totalElements
         this.list = res.data.data.content
         this.listLoading = false
@@ -274,7 +274,7 @@ export default {
       }
       const data = searchmodelfile(obj)
       if (data.filters.length === 0) return
-      modelconditon(data).then((data) => {
+      toolsAndSoftwareconditon(data).then((data) => {
         this.list = data.data.data
         // this.$notify({
         //   title: 'Success',
@@ -294,7 +294,7 @@ export default {
       // this.getList()
     },
     handleModifyStatus(row) {
-      models(this.user_id, row.id).then((data) => {
+      toolsAndSoftware(this.user_id, row.id).then((data) => {
         console.log(data)
         // window.open(data.request.responseURL)
         location.href = data.request.responseURL

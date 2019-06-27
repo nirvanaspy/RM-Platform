@@ -133,6 +133,11 @@
                      @click="handleModifyStatus(row)">
             下载
           </el-button>
+          <!-- <el-button size="mini"
+                     type="warning"
+                     @click="preview(row)">
+            预览
+          </el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -143,16 +148,31 @@
                 :limit.sync="listQuery.limit"
                 @pagination="getList" />
     <el-dialog :visible.sync="dialoginfoVisible"
-               title="Reading statistics">
+               title="文件信息">
       <el-table :data="pvData"
                 border
                 fit
                 highlight-current-row
                 style="width: 100%">
-        <el-table-column prop="key"
+        <el-table-column prop="name"
                          label="Channel" />
-        <el-table-column prop="pv"
-                         label="Pv" />
+        <el-table-column prop="FileEntity.postfix"
+                         label="类型" />
+        <el-table-column label="操作"
+                         align="center"
+                         width="230"
+                         class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <div v-if="scope.row.FileEntity.postfix=='pdf'">
+              <el-button size="mini"
+                         type="warning"
+                         @click="preview(row)">
+                预览
+              </el-button>
+            </div>
+
+          </template>
+        </el-table-column>
       </el-table>
       <span slot="footer"
             class="dialog-footer">
@@ -171,9 +191,10 @@ import { parseTime } from '@/utils'
 import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 // import { datalist } from '@/api/mockdata'
-import { filesearch, modelconditon } from '@/api/fileSearch'
-import { models } from '@/api/download'
+import { standardFilelist, standardconditon } from '@/api/fileSearch'
+import { standars } from '@/api/download'
 import { searchmodelfile } from '@/api/searccondition'
+import { preview, getallfiles } from '@/api/preview'
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
   { key: 'US', display_name: 'USA' },
@@ -208,12 +229,12 @@ export default {
     return {
       pvData: [
         {
-          'key': 'title',
-          'pv': 'hello'
+          'name': 'ssf',
+          'postfix': 'pdf'
         },
         {
-          'key': 'roman',
-          'pv': 'date'
+          'name': 'roman',
+          'postfix': 'date'
         }
       ],
       tableKey: 0,
@@ -234,7 +255,8 @@ export default {
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
-      dialoginfoVisible: false
+      dialoginfoVisible: false,
+      resouceid: ''
     }
   },
   created() {
@@ -249,7 +271,7 @@ export default {
       // this.total = data.data.total
       var obj = JSON.parse(JSON.stringify(this.listQuery))
       obj.page = obj.page - 1
-      filesearch(obj).then((res) => {
+      standardFilelist(obj).then((res) => {
         this.total = res.data.data.totalElements
         this.list = res.data.data.content
         this.listLoading = false
@@ -274,7 +296,7 @@ export default {
       }
       const data = searchmodelfile(obj)
       if (data.filters.length === 0) return
-      modelconditon(data).then((data) => {
+      standardconditon(data).then((data) => {
         this.list = data.data.data
         // this.$notify({
         //   title: 'Success',
@@ -294,13 +316,11 @@ export default {
       // this.getList()
     },
     handleModifyStatus(row) {
-      models(this.user_id, row.id).then((data) => {
-        console.log(data)
+      standars(this.user_id, row.id).then((data) => {
         // window.open(data.request.responseURL)
         location.href = data.request.responseURL
         // console.log(data)
       }).catch(() => {
-
       })
     },
     sortChange(data) {
@@ -325,8 +345,15 @@ export default {
       // this.dialogStatus = 'update'
       // this.dialogFormVisible = true
     },
-    handlePreview(scop) {
-      this.dialoginfoVisible = true
+    handlePreview(scope) {
+      getallfiles(scope.row.id).then((data) => {
+        // console.log(data)
+        this.pvData = data.data.data
+        this.dialoginfoVisible = true
+        // this.resouceid=data.data.id
+      }).catch(() => {
+        console.log('资源列表获取失败')
+      })
     },
     updateData() {
       this.$notify({
@@ -375,6 +402,15 @@ export default {
           return v[j]
         }
       }))
+    },
+    preview(row) {
+      preview(row.FileEntity.id).then((data) => {
+        const id = data.data.pathId
+        window.open(`http://192.168.31.88:8080/standards/viewer/document/${id}`)
+        // location.href = `http://192.168.43.202:8080/standards/viewer/document/${id}`
+      }).then(() => {
+
+      })
     }
   },
   computed: {
